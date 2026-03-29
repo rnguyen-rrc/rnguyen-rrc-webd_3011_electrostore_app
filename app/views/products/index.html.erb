@@ -1,11 +1,21 @@
 <div class="products-page">
   <h1 class="page-title">All Products</h1>
 
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @products %>
+  </div>
+
   <div class="row g-4">
     <% @products.each do |product| %>
       <div class="col-12 col-md-6 col-lg-4">
         <%= render partial: "product_card", locals: { product: product } %>
       </div>
     <% end %>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @products %>
   </div>
 </div>

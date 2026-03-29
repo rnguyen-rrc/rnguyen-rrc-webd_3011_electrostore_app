@@ -81,3 +81,14 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   object-fit: cover;
   border-radius: 8px;
 }
+
+.pagination {
+  .page-link {
+    color: $brand-blue;
+  }
+
+  .active .page-link {
+    background-color: $brand-blue;
+    border-color: $brand-blue;
+  }
+}
