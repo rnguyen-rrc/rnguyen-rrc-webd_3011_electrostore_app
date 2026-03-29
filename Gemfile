@@ -73,3 +73,5 @@ gem "faker", "~> 3.6"
 
 gem 'nokogiri'
 gem 'open-uri'
+
+gem "bootstrap", "~> 5.3"

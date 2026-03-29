@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   get "up" => "rails/health#show", as: :rails_health_check
+
+  root "products#index"
+  resources :products, only: [:index, :show]
 end

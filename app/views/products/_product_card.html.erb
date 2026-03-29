@@ -1,0 +1,24 @@
+<div class="card product-card h-100">
+  <% if product.image.attached? %>
+    <%= image_tag product.image, class: "card-img-top product-image", alt: product.name %>
+  <% elsif product.image_url.present? %>
+    <%= image_tag product.image_url, class: "card-img-top product-image", alt: product.name %>
+  <% else %>
+    <%= image_tag "https://placehold.co/600x400?text=No+Image", class: "card-img-top product-image" %>
+  <% end %>
+
+  <div class="card-body">
+    <h5 class="product-title">
+      <%= link_to product.name, product_path(product), class: "text-decoration-none" %>
+    </h5>
+
+    <p class="card-text"><%= truncate(product.description, length: 100) %></p>
+
+    <p class="product-price">$<%= product.price %></p>
+
+    <p class="product-categories">
+      <strong>Categories:</strong>
+      <%= product.categories.map(&:name).join(", ") %>
+    </p>
+  </div>
+</div>

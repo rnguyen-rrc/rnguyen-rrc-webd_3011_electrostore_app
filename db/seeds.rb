@@ -41,7 +41,8 @@ puts "Creating products..."
     name: Faker::Commerce.product_name,
     description: Faker::Lorem.paragraph(sentence_count: 3),
     price: Faker::Commerce.price(range: 10..500),
-    stock_quantity: rand(1..100)
+    stock_quantity: rand(1..100),
+    image_url: "https://placehold.co/600x400?text=Product"
   )
 
   # Assign 1–3 random categories
@@ -87,7 +88,8 @@ doc.css('.product_pod').each do |book|
     description: "Book from BooksToScrape",
     price: price,
     stock_quantity: rand(1..100),
-    categories: [category]
+    categories: [category],
+    image_url: "https://placehold.co/600x400?text=Product"
   )
 end
 
@@ -124,7 +126,8 @@ data["products"].each do |item|
     name: name,
     description: description,
     price: price,
-    stock_quantity: rand(5..50)
+    stock_quantity: rand(5..50),
+    image_url: item["images"]&.first || item["thumbnail"]
   )
 
   product.categories << category

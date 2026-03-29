@@ -1,0 +1,26 @@
+<div class="product-show-page">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="product-detail-card">
+      <% if @product.image.attached? %>
+  <%= image_tag @product.image, class: "img-fluid mb-3 product-show-image", alt: @product.name %>
+<% elsif @product.image_url.present? %>
+  <%= image_tag @product.image_url, class: "img-fluid mb-3 product-show-image", alt: @product.name %>
+<% else %>
+  <%= image_tag "https://via.placeholder.com/800x500?text=No+Image", class: "img-fluid mb-3 product-show-image", alt: @product.name %>
+<% end %>
+        <h1 class="product-name"><%= @product.name %></h1>
+
+        <p><%= @product.description %></p>
+
+        <div class="product-meta">
+          <p><strong>Price:</strong> $<%= @product.price %></p>
+          <p><strong>Stock Quantity:</strong> <%= @product.stock_quantity %></p>
+          <p><strong>Categories:</strong> <%= @product.categories.map(&:name).join(", ") %></p>
+        </div>
+
+        <%= link_to "Back to Products", products_path, class: "btn btn-primary mt-3" %>
+      </div>
+    </div>
+  </div>
+</div>
