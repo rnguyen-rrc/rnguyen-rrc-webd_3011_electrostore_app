@@ -5,8 +5,14 @@ ActiveAdmin.register Product do
   permit_params :name, :description, :price, :stock_quantity, :image, :remove_image, category_ids: []
 
   remove_filter :product_categories
-  remove_filter :categories
 
+  # Add filters
+  filter :name
+  filter :description
+  filter :price
+  filter :stock_quantity
+  filter :categories, as: :select, collection: -> { Category.all }
+  
   index do
     selectable_column
     id_column

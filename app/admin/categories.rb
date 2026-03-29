@@ -3,6 +3,7 @@ ActiveAdmin.register Category do
 
   remove_filter :created_by
   remove_filter :updated_by
+  remove_filter :product_categories
 
   form do |f|
     f.inputs do
