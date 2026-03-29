@@ -70,3 +70,6 @@ gem 'activeadmin'
 gem "sassc-rails"
 
 gem "faker", "~> 3.6"
+
+gem 'nokogiri'
+gem 'open-uri'

@@ -45,3 +45,42 @@ puts "Creating products..."
 end
 
 puts "Seeding complete!"
+
+require 'open-uri'
+require 'nokogiri'
+
+base_url = "https://books.toscrape.com/"
+
+puts "Scraping categories..."
+
+# ---------- SCRAPE CATEGORIES ----------
+doc = Nokogiri::HTML(URI.open(base_url))
+
+doc.css('.side_categories ul li ul li a').each do |category|
+  name = category.text.strip
+
+  Category.find_or_create_by!(name: name)
+end
+
+puts "Categories created!"
+
+# ---------- SCRAPE PRODUCTS ----------
+puts "Scraping products..."
+
+doc.css('.product_pod').each do |book|
+  title = book.css('h3 a').attr('title').value
+  price = book.css('.price_color').text.gsub('£', '').to_f
+
+  # random category (simple version)
+  category = Category.order("RANDOM()").first
+
+  Product.create!(
+    name: title,
+    description: "Book from BooksToScrape",
+    price: price,
+    stock_quantity: rand(1..100),
+    categories: [category]
+  )
+end
+
+puts "Products created!"
