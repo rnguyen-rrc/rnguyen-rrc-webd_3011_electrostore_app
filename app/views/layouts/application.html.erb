@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Electrostore App" %></title>
+    <title><%= content_for(:title) || "Electrostore" %></title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Electrostore App">
+    <meta name="application-name" content="Electrostore">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
+    <!-- Favicon -->
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <!-- Styles -->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
 
+    <!-- Scripts -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
+  <body class="bg-light">
+
+    <!-- Navbar -->
     <%= render "shared/navbar" %>
-    <div class="container py-4">
+
+    <!-- Flash Messages (nice polish) -->
+    <% if notice %>
+      <div class="container mt-3">
+        <div class="alert alert-success"><%= notice %></div>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="container mt-3">
+        <div class="alert alert-danger"><%= alert %></div>
+      </div>
+    <% end %>
+
+    <!-- Main Content -->
+    <main class="container py-4">
       <%= yield %>
-    </div>
+    </main>
+
   </body>
 </html>
