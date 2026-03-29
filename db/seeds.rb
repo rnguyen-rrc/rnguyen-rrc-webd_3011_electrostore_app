@@ -14,7 +14,11 @@ AdminUser.find_or_create_by!(email: 'admin@example.com') do |admin|
 end
 
 # -----------------------------
-# 1. Create Categories
+# 1.6 - Write a seed script to populate product database with products and associated categories using Faker
+# -----------------------------
+
+# -----------------------------
+# Create Categories
 # -----------------------------
 puts "Creating categories..."
 
@@ -28,7 +32,7 @@ categories = category_names.map do |name|
 end
 
 # -----------------------------
-# 2. Create Products
+# Create Products
 # -----------------------------
 puts "Creating products..."
 
@@ -45,6 +49,10 @@ puts "Creating products..."
 end
 
 puts "Seeding complete!"
+
+# --------------------------------------------------------------------------------------------------------------------
+# 1.7 - Scrape seed data for products and categories from a 3rd party website using a web scraping tool
+# --------------------------------------------------------------------------------------------------------------------
 
 require 'open-uri'
 require 'nokogiri'
@@ -84,3 +92,42 @@ doc.css('.product_pod').each do |book|
 end
 
 puts "Products created!"
+
+# -----------------------------
+# 1.8 - API DATA (DummyJSON)
+# -----------------------------
+require 'net/http'
+require 'json'
+
+puts "Seeding products from API..."
+
+url = URI("https://dummyjson.com/products/category/smartphones")
+response = Net::HTTP.get(url)
+data = JSON.parse(response)
+
+# Create or find category
+category = Category.find_or_create_by!(
+  name: "Smartphones"
+) do |c|
+  c.description = "Mobile devices from API"
+end
+
+data["products"].each do |item|
+  name = item["title"]
+  description = item["description"]
+  price = item["price"]
+
+  # Avoid duplicates
+  next if Product.exists?(name: name)
+
+  product = Product.create!(
+    name: name,
+    description: description,
+    price: price,
+    stock_quantity: rand(5..50)
+  )
+
+  product.categories << category
+end
+
+puts "API seeding complete!"
