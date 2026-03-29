@@ -2,7 +2,10 @@ ActiveAdmin.register Product do
 
   include Rails.application.routes.url_helpers
 
-  permit_params :name, :description, :price, :stock_quantity, :image, :remove_image
+  permit_params :name, :description, :price, :stock_quantity, :image, :remove_image, category_ids: []
+
+  remove_filter :product_categories
+  remove_filter :categories
 
   index do
     selectable_column
@@ -24,6 +27,11 @@ ActiveAdmin.register Product do
     f.inputs do
       f.input :name
       f.input :description
+      f.input :categories,
+  input_html: {
+    size: 5,
+    style: "width: 300px;"
+  }
       f.input :price
       f.input :stock_quantity
 

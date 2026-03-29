@@ -68,3 +68,5 @@ end
 gem 'devise'
 gem 'activeadmin'
 gem "sassc-rails"
+
+gem "faker", "~> 3.6"

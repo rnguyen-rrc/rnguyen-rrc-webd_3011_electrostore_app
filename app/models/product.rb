@@ -1,5 +1,8 @@
 class Product < ApplicationRecord
 
+  has_many :product_categories, dependent: :destroy
+  has_many :categories, through: :product_categories
+  
   has_one_attached :image
 
   def self.ransackable_attributes(auth_object = nil)
