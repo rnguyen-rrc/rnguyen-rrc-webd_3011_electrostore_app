@@ -1,24 +1,45 @@
-<div class="card product-card h-100">
-  <% if product.image.attached? %>
-    <%= image_tag product.image, class: "card-img-top product-image", alt: product.name %>
-  <% elsif product.image_url.present? %>
-    <%= image_tag product.image_url, class: "card-img-top product-image", alt: product.name %>
-  <% else %>
-    <%= image_tag "https://placehold.co/600x400?text=No+Image", class: "card-img-top product-image" %>
-  <% end %>
+<%= link_to product_path(product), class: "text-decoration-none text-dark" do %>
+  <div class="card product-card h-100 shadow-sm">
 
-  <div class="card-body">
-    <h5 class="product-title">
-      <%= link_to product.name, product_path(product), class: "text-decoration-none" %>
-    </h5>
+    <!-- Product Image -->
+    <% if product.image.attached? %>
+      <%= image_tag product.image,
+                    class: "card-img-top product-image",
+                    alt: product.name %>
+    <% elsif product.image_url.present? %>
+      <%= image_tag product.image_url,
+                    class: "card-img-top product-image",
+                    alt: product.name %>
+    <% else %>
+      <%= image_tag "https://placehold.co/600x400?text=No+Image",
+                    class: "card-img-top product-image",
+                    alt: product.name %>
+    <% end %>
 
-    <p class="card-text"><%= truncate(product.description, length: 100) %></p>
+    <!-- Card Body -->
+    <div class="card-body">
 
-    <p class="product-price">$<%= product.price %></p>
+      <!-- Product Name -->
+      <h5 class="product-title mb-2">
+        <%= product.name %>
+      </h5>
 
-    <p class="product-categories">
-      <strong>Categories:</strong>
-      <%= product.categories.map(&:name).join(", ") %>
-    </p>
+      <!-- Description -->
+      <p class="card-text mb-2">
+        <%= truncate(product.description, length: 100) %>
+      </p>
+
+      <!-- Price -->
+      <p class="product-price mb-2 fw-bold">
+        <%= number_to_currency(product.price) %>
+      </p>
+
+      <!-- Categories -->
+      <p class="product-categories mb-0 text-muted small">
+        <%= product.categories.map(&:name).join(", ") %>
+      </p>
+
+    </div>
+
   </div>
-</div>
+<% end %>

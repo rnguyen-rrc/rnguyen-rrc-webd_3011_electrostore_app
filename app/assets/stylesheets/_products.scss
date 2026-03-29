@@ -19,6 +19,8 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   .product-card {
     @extend %card-base;
     height: 100%;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
     .card-body {
       padding: $base-spacing * 1.25;
@@ -39,6 +41,11 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       font-size: 0.9rem;
       color: #666;
     }
+    
+    &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
   }
 }
 
@@ -51,6 +58,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   .product-name {
     color: $primary-color;
     margin-bottom: 1rem;
+    font-weight: 600;
   }
 
   .product-meta {
@@ -71,5 +79,5 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-height: 400px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 8px;
 }
