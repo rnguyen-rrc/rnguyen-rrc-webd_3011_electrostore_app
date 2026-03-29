@@ -6,10 +6,7 @@ class ProductsController < ApplicationController
     # Keyword search
     if params[:keyword].present?
       keyword = "%#{params[:keyword]}%"
-      @products = @products.where(
-        "products.name ILIKE ? OR products.description ILIKE ?",
-        keyword, keyword
-      )
+      @products = @products.where("products.name LIKE ? OR products.description LIKE ?", keyword, keyword)
     end
 
     # Category filter (many-to-many)
