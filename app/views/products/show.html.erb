@@ -1,25 +1,63 @@
-<div class="product-show-page">
+<div class="product-show-page container py-4">
   <div class="row justify-content-center">
     <div class="col-12 col-lg-8">
-      <div class="product-detail-card">
-      <% if @product.image.attached? %>
-  <%= image_tag @product.image, class: "img-fluid mb-3 product-show-image", alt: @product.name %>
-<% elsif @product.image_url.present? %>
-  <%= image_tag @product.image_url, class: "img-fluid mb-3 product-show-image", alt: @product.name %>
-<% else %>
-  <%= image_tag "https://via.placeholder.com/800x500?text=No+Image", class: "img-fluid mb-3 product-show-image", alt: @product.name %>
-<% end %>
-        <h1 class="product-name"><%= @product.name %></h1>
+      <div class="product-detail-card card shadow-sm p-3">
 
-        <p><%= @product.description %></p>
+        <!-- Product Image -->
+        <% if @product.image.attached? %>
+          <%= image_tag @product.image,
+                        class: "img-fluid mb-3 product-show-image",
+                        alt: @product.name %>
+        <% elsif @product.image_url.present? %>
+          <%= image_tag @product.image_url,
+                        class: "img-fluid mb-3 product-show-image",
+                        alt: @product.name %>
+        <% else %>
+          <%= image_tag "https://via.placeholder.com/800x500?text=No+Image",
+                        class: "img-fluid mb-3 product-show-image",
+                        alt: @product.name %>
+        <% end %>
 
-        <div class="product-meta">
-          <p><strong>Price:</strong> $<%= @product.price %></p>
-          <p><strong>Stock Quantity:</strong> <%= @product.stock_quantity %></p>
-          <p><strong>Categories:</strong> <%= @product.categories.map(&:name).join(", ") %></p>
+        <!-- Product Title -->
+        <h1 class="product-name mb-3"><%= @product.name %></h1>
+
+        <!-- Description -->
+        <p class="mb-3"><%= @product.description %></p>
+
+        <!-- Product Meta -->
+        <div class="product-meta mb-3">
+          <p><strong>Price:</strong> $<%= number_to_currency(@product.price, precision: 2) %></p>
+
+          <p>
+            <strong>Stock Quantity:</strong>
+            <%= @product.stock_quantity %>
+          </p>
+
+          <p>
+            <strong>Categories:</strong>
+            <% if @product.categories.any? %>
+              <% @product.categories.each do |category| %>
+                <%= link_to category.name,
+                            category_path(category),
+                            class: "badge bg-secondary text-decoration-none me-1" %>
+              <% end %>
+            <% else %>
+              <span class="text-muted">None</span>
+            <% end %>
+          </p>
         </div>
 
-        <%= link_to "Back to Products", products_path, class: "btn btn-primary mt-3" %>
+        <!-- Navigation Buttons -->
+        <div class="d-flex gap-2">
+          <%= link_to "Back to Products",
+                      products_path,
+                      class: "btn btn-primary" %>
+
+          <%= link_to "Browse Categories",
+                      categories_path,
+                      class: "btn btn-outline-secondary" %>
+        </div>
+
       </div>
     </div>
   </div>

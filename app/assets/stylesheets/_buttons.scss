@@ -1,0 +1,15 @@
+.btn-brand {
+  background-color: $brand-blue;
+  border-color: $brand-blue;
+  color: #ffffff !important;
+
+  &:hover {
+    background-color: $brand-blue-light;
+    border-color: $brand-blue-light;
+    color: #ffffff !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($brand-blue, 0.25);
+  }
+}
