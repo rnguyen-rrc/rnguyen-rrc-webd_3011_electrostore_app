@@ -1,0 +1,33 @@
+<div class="categories-page container py-4">
+  <h1 class="page-title mb-4">Categories</h1>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Products in Category</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+
+            <td>
+              <%= category.products.count %>
+            </td>
+
+            <td>
+              <%= link_to "View Products",
+                          category_path(category),
+                          class: "btn btn-sm btn-brand" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

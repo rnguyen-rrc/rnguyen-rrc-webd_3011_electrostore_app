@@ -1,0 +1,19 @@
+<div class="products-page">
+  <h1 class="page-title mb-4"><%= @category.name %></h1>
+
+  <% if @products.any? %>
+    <div class="row g-4">
+      <% @products.each do |product| %>
+        <div class="col-12 col-md-6 col-lg-4">
+          <%= render partial: "products/product_card", locals: { product: product } %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No products found in this category.</p>
+  <% end %>
+
+  <div class="mt-4">
+    <%= link_to "Back to Categories", categories_path, class: "btn btn-secondary" %>
+  </div>
+</div>
