@@ -1,3 +1,5 @@
+@import "variables";
+
 $primary-color: #0d6efd;
 $card-radius: 12px;
 $base-spacing: 1rem;
@@ -71,8 +73,13 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .product-image {
-  height: 200px;
+  width: 100%;
+  height: 220px;
   object-fit: cover;
+}
+
+.card-img-top {
+  background-color: #f8f9fa;
 }
 
 .product-show-image {
@@ -90,5 +97,23 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   .active .page-link {
     background-color: $brand-blue;
     border-color: $brand-blue;
+  }
+}
+
+.product-image-wrapper {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
