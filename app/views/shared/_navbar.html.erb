@@ -1,20 +1,61 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
+
+    <!-- Brand -->
     <%= link_to "Electrostore", root_path, class: "navbar-brand" %>
 
+    <!-- Toggle -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to "Products", products_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Categories", categories_path, class: "nav-link" %>
-        </li>
-      </ul>
+
+      <!-- Wrap LEFT items together -->
+      <div class="d-flex align-items-center">
+
+        <!-- Nav links (stay close to brand) -->
+        <ul class="navbar-nav ms-2">
+          <li class="nav-item">
+            <%= link_to "Products",
+                        products_path,
+                        class: "nav-link #{'active' if current_page?(products_path)}" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Categories",
+                        categories_path,
+                        class: "nav-link #{'active' if current_page?(categories_path)}" %>
+          </li>
+        </ul>
+
+      </div>
+
+      <!-- Push ONLY search to right -->
+      <div class="ms-auto">
+        <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-2" do |f| %>
+
+          <%= f.text_field :keyword,
+                           value: params[:keyword],
+                           placeholder: "Search products...",
+                           class: "form-control" %>
+
+          <%= f.collection_select :category_id,
+                                  Category.order(:name),
+                                  :id,
+                                  :name,
+                                  { include_blank: "All Categories", selected: params[:category_id] },
+                                  { class: "form-select" } %>
+
+          <%= f.submit "Search", class: "btn btn-success" %>
+
+          <% if params[:keyword].present? || params[:category_id].present? %>
+            <%= link_to "Clear", products_path, class: "btn btn-outline-light" %>
+          <% end %>
+
+        <% end %>
+      </div>
+
     </div>
   </div>
 </nav>
