@@ -2,19 +2,15 @@
   <div class="card product-card h-100 shadow-sm">
 
     <!-- Product Image -->
-    <% if product.image.attached? %>
-      <%= image_tag product.image,
-                    class: "card-img-top product-image",
-                    alt: product.name %>
-    <% elsif product.image_url.present? %>
-      <%= image_tag product.image_url,
-                    class: "card-img-top product-image",
-                    alt: product.name %>
-    <% else %>
-      <%= image_tag "https://placehold.co/600x400?text=No+Image",
-                    class: "card-img-top product-image",
-                    alt: product.name %>
-    <% end %>
+    <div class="product-image-wrapper">
+      <% if product.image.attached? %>
+        <%= image_tag product.image, class: "product-image", alt: product.name %>
+      <% elsif product.image_url.present? %>
+        <%= image_tag product.image_url, class: "product-image", alt: product.name %>
+      <% else %>
+        <%= image_tag "https://placehold.co/600x400?text=No+Image", class: "product-image" %>
+      <% end %>
+    </div>
 
     <!-- Card Body -->
     <div class="card-body">
