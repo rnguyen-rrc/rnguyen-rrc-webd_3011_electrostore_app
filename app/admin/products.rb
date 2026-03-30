@@ -58,8 +58,14 @@ ActiveAdmin.register Product do
     attributes_table do
       row :name
       row :description
-      row :price
+      row :price do |product|
+        number_to_currency(product.price)
+      end
       row :stock_quantity
+
+      row :categories do |product|
+        product.categories.map(&:name).join(", ")
+      end
 
       row :image do |product|
         if product.image.attached?
