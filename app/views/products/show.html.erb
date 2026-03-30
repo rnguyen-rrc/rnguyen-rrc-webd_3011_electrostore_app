@@ -4,19 +4,21 @@
     <!-- LEFT: IMAGE -->
     <div class="col-12 col-md-6">
       <div class="card shadow-sm p-3">
-        <% if @product.image.attached? %>
-          <%= image_tag @product.image,
-                        class: "img-fluid product-show-image",
-                        alt: @product.name %>
-        <% elsif @product.image_url.present? %>
-          <%= image_tag @product.image_url,
-                        class: "img-fluid product-show-image",
-                        alt: @product.name %>
-        <% else %>
-          <%= image_tag "https://via.placeholder.com/800x500?text=No+Image",
-                        class: "img-fluid product-show-image",
-                        alt: @product.name %>
-        <% end %>
+        <div class="product-show-image-wrapper mb-3">
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image,
+                          class: "product-show-image",
+                          alt: @product.name %>
+          <% elsif @product.image_url.present? %>
+            <%= image_tag @product.image_url,
+                          class: "product-show-image",
+                          alt: @product.name %>
+          <% else %>
+            <%= image_tag "https://via.placeholder.com/800x500?text=No+Image",
+                          class: "product-show-image",
+                          alt: @product.name %>
+          <% end %>
+        </div>
       </div>
     </div>
 
