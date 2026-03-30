@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
                   .distinct
                   .order(created_at: :desc)
                   .page(params[:page])
-                  .per(9)
+                  .per(12)
   end
 
   def show
