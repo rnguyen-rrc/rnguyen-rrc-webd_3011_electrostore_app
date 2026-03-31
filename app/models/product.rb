@@ -5,6 +5,15 @@ class Product < ApplicationRecord
 
   has_one_attached :image
 
+  scope :new_products, -> {
+    where("created_at >= ?", 3.days.ago)
+  }
+
+  scope :recently_updated, -> {
+    where("updated_at >= ?", 3.days.ago)
+      .where("created_at < ?", 3.days.ago)
+  }
+
   def self.ransackable_attributes(auth_object = nil)
     ["id", "name", "description", "price", "stock_quantity", "image_url", "created_at", "updated_at"]
   end

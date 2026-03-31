@@ -3,22 +3,28 @@ class ProductsController < ApplicationController
     @categories = Category.all
     @products = Product.all
 
-    # Keyword search
     if params[:keyword].present?
       keyword = "%#{params[:keyword]}%"
       @products = @products.where("products.name LIKE ? OR products.description LIKE ?", keyword, keyword)
     end
 
-    # Category filter (many-to-many)
     if params[:category_id].present?
       @products = @products.joins(:categories)
                           .where(categories: { id: params[:category_id] })
     end
 
-    # Order + Pagination
+    if params[:filter].present?
+      case params[:filter]
+      when "new"
+        @products = @products.new_products
+      when "recent"
+        @products = @products.recently_updated
+      end
+    end
+
     @products = @products
                   .distinct
-                  .order(created_at: :desc)
+                  .order(id: :asc)
                   .page(params[:page])
                   .per(12)
   end
