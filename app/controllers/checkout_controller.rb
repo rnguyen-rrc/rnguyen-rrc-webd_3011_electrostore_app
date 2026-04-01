@@ -48,21 +48,11 @@ class CheckoutController < ApplicationController
     pst_amount = subtotal * pst_rate
     total = subtotal + hst_amount + pst_amount
 
-    # 4. Create user (guest as customer)
-    user = User.create!(
-      first_name: params[:first_name],
-      last_name: params[:last_name],
-      email: params[:email],
-      phone: params[:phone],
-      street_name: params[:street],
-      city: params[:city],
-      postal_code: params[:postal_code],
-      province_id: params[:province_id]
-    )
-
     # 5. Create order
     order = Order.create!(
-      user_id: user.id,
+      user_id: session[:user_id],
+      first_name: params[:first_name],
+      last_name: params[:last_name],
       shipping_street: params[:street],
       shipping_city: params[:city],
       shipping_province_id: params[:province_id],
@@ -71,7 +61,9 @@ class CheckoutController < ApplicationController
       hst_amount: hst_amount,
       pst_amount: pst_amount,
       total_amount: total,
-      status: "pending"
+      status: "pending",
+      email: params[:email],
+      phone: params[:phone],
     )
 
     # 6. Create order items

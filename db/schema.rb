@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_200858) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_211719) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -101,7 +101,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_200858) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "email"
+    t.string "first_name"
     t.decimal "hst_amount"
+    t.string "last_name"
+    t.string "phone"
     t.decimal "pst_amount"
     t.string "shipping_city"
     t.string "shipping_postal_code"

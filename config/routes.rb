@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   delete "cart/remove/:product_id", to: "cart#remove", as: "remove_from_cart"
   get    "checkout", to: "checkout#index"
   get    "provinces/:id/tax", to: "provinces#tax"
-
+  post "signup_from_order/:order_id", to: "users#signup_from_order", as: :signup_from_order
+  
   resources :checkout, only: [:index, :new, :create]
   resources :orders, only: [:show]
 

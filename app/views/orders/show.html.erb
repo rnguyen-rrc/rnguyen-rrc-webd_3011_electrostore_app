@@ -1,9 +1,27 @@
 <h2>Order Invoice</h2>
 
-<p><strong>Name:</strong> <%= @order.user.first_name %> <%= @order.user.last_name %></p>
-<p><strong>Address:</strong> <%= @order.user.street_name %>, <%= @order.user.city %>, <%= @order.user.province.name %> <%= @order.user.postal_code %></p>
-<p><strong>Email:</strong> <%= @order.user.email %></p>
-<p><strong>Phone:</strong> <%= @order.user.phone %></p>
+<p>
+  <strong>Name:</strong>
+  <%= @order.first_name %> <%= @order.last_name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @order.shipping_street %>,
+  <%= @order.shipping_city %>,
+  <%= @order.province.name %>,
+  <%= @order.shipping_postal_code  %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @order.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @order.phone %>
+</p>
 
 <hr>
 
@@ -65,4 +83,32 @@
 
     </div>
   </div>
+</div>
+
+<hr class="my-4">
+
+<div class="card p-4 mt-4">
+  <h4>Create an account</h4>
+  <p class="text-muted">
+    Save your details for faster checkout next time.
+  </p>
+
+  <%= form_with url: signup_from_order_path(@order), method: :post, local: true do %>
+
+    <%= text_field_tag :username, nil,
+          placeholder: "Username",
+          class: "form-control mb-2" %>
+
+    <%= password_field_tag :password, nil,
+          placeholder: "Password",
+          class: "form-control mb-2" %>
+
+    <%= password_field_tag :password_confirmation, nil,
+          placeholder: "Confirm Password",
+          class: "form-control mb-3" %>
+
+    <%= submit_tag "Create Account",
+          class: "btn btn-primary w-100" %>
+
+  <% end %>
 </div>
