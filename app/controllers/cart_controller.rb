@@ -14,23 +14,22 @@ class CartController < ApplicationController
 
     @tax_rate = 0.12 # Manitoba (5% GST + 7% PST)
 
-@taxes = @subtotal * @tax_rate
-@total = @subtotal + @taxes
+    @taxes = @subtotal * @tax_rate
+    @total = @subtotal + @taxes
   end
 
   def add
     session[:cart] ||= {}
 
     product_id = params[:product_id].to_s
+    quantity = params[:quantity].to_i
 
-    if session[:cart][product_id]
-      session[:cart][product_id] += 1
-    else
-      session[:cart][product_id] = 1
-    end
+    quantity = 1 if quantity <= 0  # safety
 
-    redirect_back fallback_location: products_path,
-                  notice: "Product added to cart"
+    session[:cart][product_id] ||= 0
+    session[:cart][product_id] += quantity
+
+    redirect_to product_path(product_id), notice: "Added to cart"
   end
 
   def update

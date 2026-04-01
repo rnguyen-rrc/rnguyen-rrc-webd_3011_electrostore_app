@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_192518) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_200858) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -153,10 +153,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_192518) do
     t.string "updated_by"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "city"
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "password_digest"
+    t.string "phone"
+    t.string "postal_code"
+    t.integer "province_id", null: false
+    t.string "role"
+    t.string "street_name"
+    t.datetime "updated_at", null: false
+    t.string "username"
+    t.index ["province_id"], name: "index_users_on_province_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
+  add_foreign_key "users", "provinces"
 end

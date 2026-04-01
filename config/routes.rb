@@ -11,9 +11,11 @@ Rails.application.routes.draw do
   post   "cart/add/:product_id",    to: "cart#add",    as: "add_to_cart"
   patch  "cart/update/:product_id", to: "cart#update", as: "update_cart"
   delete "cart/remove/:product_id", to: "cart#remove", as: "remove_from_cart"
-  get "checkout", to: "checkout#index"
-  
+  get    "checkout", to: "checkout#index"
+  get    "provinces/:id/tax", to: "provinces#tax"
+
   resources :checkout, only: [:index, :new, :create]
+  resources :orders, only: [:show]
 
   root "products#index"
 end

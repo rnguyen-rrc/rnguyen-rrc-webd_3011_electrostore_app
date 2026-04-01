@@ -1,5 +1,17 @@
 class CheckoutController < ApplicationController
   def new
+    @cart = session[:cart] || {}
+    @products = Product.where(id: @cart.keys)
+
+    @subtotal = @products.sum do |product|
+      product.price * @cart[product.id.to_s]
+    end
+
+    # Default Manitoba tax (12%)
+    tax_rate = 0.12
+    @taxes = @subtotal * tax_rate
+
+    @total = @subtotal + @taxes
   end
 
   def index
@@ -17,54 +29,73 @@ class CheckoutController < ApplicationController
   end
 
   def create
+    # 1. Get cart
     cart = session[:cart] || {}
-    products = Product.find(cart.keys)
+    products = Product.where(id: cart.keys)
 
-    province = Province.find(params[:province_id])
-
+    # 2. Calculate subtotal
     subtotal = products.sum do |product|
       product.price * cart[product.id.to_s]
     end
 
-    hst = subtotal * province.hst_rate
-    pst = subtotal * province.pst_rate
-    gst = subtotal * province.gst_rate
+    # 3. Get province + tax
+    province = Province.find(params[:province_id])
 
-    total = subtotal + hst + pst + gst
+    hst_rate = province.hst_rate
+    pst_rate = province.pst_rate
 
-    customer = Customer.create!(
+    hst_amount = subtotal * hst_rate
+    pst_amount = subtotal * pst_rate
+    total = subtotal + hst_amount + pst_amount
+
+    # 4. Create user (guest as customer)
+    user = User.create!(
       first_name: params[:first_name],
       last_name: params[:last_name],
       email: params[:email],
-      street: params[:street],
+      phone: params[:phone],
+      street_name: params[:street],
       city: params[:city],
+      postal_code: params[:postal_code],
       province_id: params[:province_id]
     )
 
+    # 5. Create order
     order = Order.create!(
-      customer: customer,
+      user_id: user.id,
+      shipping_street: params[:street],
+      shipping_city: params[:city],
+      shipping_province_id: params[:province_id],
+      shipping_postal_code: params[:postal_code],
       subtotal: subtotal,
-      hst_amount: hst,
-      pst_amount: pst,
-      gst_amount: gst,
+      hst_amount: hst_amount,
+      pst_amount: pst_amount,
       total_amount: total,
       status: "pending"
     )
 
+    # 6. Create order items
     products.each do |product|
-      qty = cart[product.id.to_s]
+      quantity = cart[product.id.to_s]
 
       OrderItem.create!(
-        order: order,
-        product: product,
-        quantity: qty,
+        order_id: order.id,
+        product_id: product.id,
+        quantity: quantity,
         price_at_purchase: product.price,
-        line_total: product.price * qty
+        subtotal: product.price * quantity,
+        hst_rate: hst_rate,
+        pst_rate: pst_rate,
+        hst_amount: product.price * quantity * hst_rate,
+        pst_amount: product.price * quantity * pst_rate,
+        line_total: product.price * quantity * (1 + hst_rate + pst_rate)
       )
     end
 
+    # 7. Clear cart
     session[:cart] = {}
 
-    redirect_to root_path, notice: "Order placed successfully!"
+    # 8. Redirect to invoice
+    redirect_to order_path(order)
   end
 end

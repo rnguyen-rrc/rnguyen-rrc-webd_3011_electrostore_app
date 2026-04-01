@@ -1,0 +1,68 @@
+<h2>Order Invoice</h2>
+
+<p><strong>Name:</strong> <%= @order.user.first_name %> <%= @order.user.last_name %></p>
+<p><strong>Address:</strong> <%= @order.user.street_name %>, <%= @order.user.city %>, <%= @order.user.province.name %> <%= @order.user.postal_code %></p>
+<p><strong>Email:</strong> <%= @order.user.email %></p>
+<p><strong>Phone:</strong> <%= @order.user.phone %></p>
+
+<hr>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>HST</th>
+      <th>PST</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order.order_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.price_at_purchase) %></td>
+        <td><%= number_to_currency(item.hst_amount) %></td>
+        <td><%= number_to_currency(item.pst_amount) %></td>
+        <td><%= number_to_currency(item.line_total) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<div class="row mt-4">
+  <div class="col-md-6"></div>
+
+  <div class="col-md-6">
+    <div class="card p-3">
+
+      <p class="d-flex justify-content-between">
+        <span>Subtotal</span>
+        <strong><%= number_to_currency(@order.subtotal) %></strong>
+      </p>
+
+      <p class="d-flex justify-content-between">
+        <span>HST</span>
+        <strong><%= number_to_currency(@order.hst_amount) %></strong>
+      </p>
+
+      <p class="d-flex justify-content-between">
+        <span>PST</span>
+        <strong><%= number_to_currency(@order.pst_amount) %></strong>
+      </p>
+
+      <hr>
+
+      <p class="d-flex justify-content-between">
+        <strong>Total</strong>
+        <strong><%= number_to_currency(@order.total_amount) %></strong>
+      </p>
+
+    </div>
+  </div>
+</div>

@@ -32,7 +32,7 @@
                                          min: 1,
                                          class: "form-control me-2" %>
 
-                    <%= f.submit "Update", class: "btn btn-sm btn-outline-primary" %>
+                    <%= f.submit "Update", class: "btn btn-sm btn-primary px-3 py-2" %>
                   </div>
                 <% end %>
               </td>
@@ -40,9 +40,10 @@
               <!-- Remove -->
               <td>
                 <%= button_to "Remove",
-                              remove_from_cart_path(product.id),
-                              method: :delete,
-                              class: "btn btn-sm btn-danger" %>
+                    remove_from_cart_path(product.id),
+                    method: :delete,
+                    form: { class: "d-inline" },
+                    class: "btn btn-sm btn-danger px-3 py-2" %>
               </td>
             </tr>
           <% end %>
