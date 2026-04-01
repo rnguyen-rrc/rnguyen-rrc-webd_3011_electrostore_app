@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_28_024840) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_192518) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -82,11 +82,46 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_024840) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.decimal "hst_amount"
+    t.decimal "hst_rate"
+    t.decimal "line_total"
+    t.integer "order_id", null: false
+    t.decimal "price_at_purchase"
+    t.integer "product_id", null: false
+    t.decimal "pst_amount"
+    t.decimal "pst_rate"
+    t.integer "quantity"
+    t.decimal "subtotal"
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.decimal "hst_amount"
+    t.decimal "pst_amount"
+    t.string "shipping_city"
+    t.string "shipping_postal_code"
+    t.integer "shipping_province_id"
+    t.string "shipping_street"
+    t.string "status"
+    t.decimal "subtotal"
+    t.decimal "total_amount"
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
   create_table "product_categories", force: :cascade do |t|
@@ -108,8 +143,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_024840) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "created_by"
+    t.decimal "hst_rate"
+    t.string "name"
+    t.decimal "pst_rate"
+    t.datetime "updated_at", null: false
+    t.string "updated_by"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
 end

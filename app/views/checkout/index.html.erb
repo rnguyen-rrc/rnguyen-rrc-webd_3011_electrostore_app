@@ -1,0 +1,37 @@
+<div class="row">
+  <!-- LEFT: Guest -->
+  <div class="col-md-6">
+    <div class="card p-4 h-100">
+      <h4>🛒 Guest Checkout</h4>
+      <p class="text-muted">
+        No account needed. You can place your order quickly.
+      </p>
+
+      <%= link_to "Continue as Guest",
+                  new_checkout_path,
+                  class: "btn btn-primary w-100 mt-3" %>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sign in -->
+  <div class="col-md-6">
+    <div class="card p-4 h-100">
+      <h4>👤 Sign In</h4>
+      <p class="text-muted">
+        Sign in to track orders and checkout faster.
+      </p>
+
+      <%= form_with url: "#", local: true do %>
+        <div class="mb-2">
+          <%= email_field_tag :email, nil, placeholder: "Email", class: "form-control" %>
+        </div>
+
+        <div class="mb-2">
+          <%= password_field_tag :password, nil, placeholder: "Password", class: "form-control" %>
+        </div>
+
+        <%= submit_tag "Sign In", class: "btn btn-dark w-100" %>
+      <% end %>
+    </div>
+  </div>
+</div>

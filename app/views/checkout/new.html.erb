@@ -1,0 +1,21 @@
+<h1>Checkout</h1>
+
+<%= form_with url: checkout_index_path, method: :post do |f| %>
+
+  <%= f.text_field :first_name, placeholder: "First Name", class: "form-control mb-2" %>
+  <%= f.text_field :last_name, placeholder: "Last Name", class: "form-control mb-2" %>
+  <%= f.email_field :email, placeholder: "Email", class: "form-control mb-2" %>
+
+  <%= f.text_field :street, placeholder: "Street", class: "form-control mb-2" %>
+  <%= f.text_field :city, placeholder: "City", class: "form-control mb-2" %>
+
+  <%= f.collection_select :province_id,
+                          Province.all,
+                          :id,
+                          :name,
+                          { prompt: "Select Province" },
+                          { class: "form-select mb-3" } %>
+
+  <%= f.submit "Place Order", class: "btn btn-success" %>
+
+<% end %>

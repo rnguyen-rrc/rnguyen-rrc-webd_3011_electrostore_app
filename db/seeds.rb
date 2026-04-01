@@ -134,3 +134,27 @@ data["products"].each do |item|
 end
 
 puts "API seeding complete!"
+
+# -----------------------------
+# 1.8 - API DATA (DummyJSON)
+# -----------------------------
+
+puts "Seeding provinces..."
+
+Province.create([
+  { name: "Alberta", hst_rate: 0.05, pst_rate: 0 },
+  { name: "British Columbia", hst_rate: 0.05, pst_rate: 0.07 },
+  { name: "Manitoba", hst_rate: 0.05, pst_rate: 0.07 },
+  { name: "New Brunswick", hst_rate: 0.15, pst_rate: 0 },
+  { name: "Newfoundland and Labrador", hst_rate: 0.15, pst_rate: 0 },
+  { name: "Nova Scotia", hst_rate: 0.14, pst_rate: 0 },
+  { name: "Ontario", hst_rate: 0.13, pst_rate: 0 },
+  { name: "Prince Edward Island", hst_rate: 0.15, pst_rate: 0 },
+  { name: "Quebec", hst_rate: 0.05, pst_rate: 0.09975 },
+  { name: "Saskatchewan", hst_rate: 0.05, pst_rate: 0.06 },
+  { name: "Northwest Territories", hst_rate: 0.05, pst_rate: 0 },
+  { name: "Nunavut", hst_rate: 0.05, pst_rate: 0 },
+  { name: "Yukon", hst_rate: 0.05, pst_rate: 0 }
+])
+
+puts "Seeding provinces completed"

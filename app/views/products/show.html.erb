@@ -64,6 +64,11 @@
           <p class="text-muted"><%= @product.description %></p>
         </div>
 
+        <%= button_to "Add to Cart",
+              add_to_cart_path(@product.id),
+              method: :post,
+              class: "btn btn-success" %>
+                
         <!-- Actions -->
         <div class="d-flex gap-2">
           <%= link_to "Back to Products",

@@ -1,0 +1,87 @@
+<h1 class="mb-4">Your Cart</h1>
+
+<% if @cart.present? %>
+
+  <div class="row">
+
+    <!-- LEFT: CART ITEMS -->
+    <div class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th style="width: 200px;">Quantity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td>
+                <strong><%= product.name %></strong><br>
+                <small><%= number_to_currency(product.price) %></small>
+              </td>
+
+              <!-- Quantity -->
+              <td>
+                <%= form_with url: update_cart_path(product.id), method: :patch, local: true do |f| %>
+                  <div class="d-flex">
+                    <%= number_field_tag :quantity,
+                                         @cart[product.id.to_s],
+                                         min: 1,
+                                         class: "form-control me-2" %>
+
+                    <%= f.submit "Update", class: "btn btn-sm btn-outline-primary" %>
+                  </div>
+                <% end %>
+              </td>
+
+              <!-- Remove -->
+              <td>
+                <%= button_to "Remove",
+                              remove_from_cart_path(product.id),
+                              method: :delete,
+                              class: "btn btn-sm btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm">
+
+        <h4 class="mb-3">Order Summary</h4>
+
+        <div class="d-flex justify-content-between">
+          <span>Product Subtotal</span>
+          <span><%= number_to_currency(@subtotal) %></span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2">
+          <span>Estimated Taxes</span>
+          <span><%= number_to_currency(@taxes) %></span>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between fw-bold">
+          <span>Estimated Total</span>
+          <span><%= number_to_currency(@total) %></span>
+        </div>
+
+        <%= link_to "Continue to Checkout",
+            checkout_index_path,
+            class: "btn btn-warning w-100 mt-3" %>
+
+      </div>
+    </div>
+
+  </div>
+
+<% else %>
+  <p>Your cart is empty</p>
+<% end %>

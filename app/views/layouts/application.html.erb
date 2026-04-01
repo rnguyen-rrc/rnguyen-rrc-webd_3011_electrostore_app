@@ -26,7 +26,21 @@
 
   <body>
     <%= render "shared/navbar" %>
+
     <div class="container py-4">
+
+      <% if notice %>
+        <div class="alert alert-success text-center">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <div class="alert alert-danger text-center">
+          <%= alert %>
+        </div>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>
