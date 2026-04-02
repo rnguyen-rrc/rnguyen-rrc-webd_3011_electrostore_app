@@ -15,22 +15,19 @@
       <ul class="navbar-nav ms-2 align-items-center">
 
         <li class="nav-item">
-          <%= link_to "Products",
-                      products_path,
-                      class: "nav-link #{'active' if current_page?(products_path)}" %>
+          <%= link_to "Products", products_path,
+              class: "nav-link #{'active' if current_page?(products_path)}" %>
         </li>
 
         <li class="nav-item">
-          <%= link_to "Categories",
-                      categories_path,
-                      class: "nav-link #{'active' if current_page?(categories_path)}" %>
+          <%= link_to "Categories", categories_path,
+              class: "nav-link #{'active' if current_page?(categories_path)}" %>
         </li>
 
-        <!-- 🛒 Cart -->
+        <!-- Cart -->
         <li class="nav-item ms-3">
           <%= link_to cart_path, class: "nav-link position-relative" do %>
             🛒 Cart
-
             <% if cart_item_count > 0 %>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 <%= cart_item_count %>
@@ -41,21 +38,23 @@
 
       </ul>
 
-      <!-- RIGHT SIDE (search only) -->
-      <div class="ms-auto">
+      <!-- RIGHT SIDE -->
+      <div class="ms-auto d-flex align-items-center gap-2">
+
+        <!-- SEARCH FORM -->
         <%= form_with url: products_path, method: :get, local: true, class: "d-flex gap-2" do |f| %>
 
           <%= f.text_field :keyword,
-                           value: params[:keyword],
-                           placeholder: "Search products...",
-                           class: "form-control" %>
+              value: params[:keyword],
+              placeholder: "Search products...",
+              class: "form-control" %>
 
           <%= f.collection_select :category_id,
-                                  Category.order(:name),
-                                  :id,
-                                  :name,
-                                  { include_blank: "All Categories", selected: params[:category_id] },
-                                  { class: "form-select" } %>
+              Category.order(:name),
+              :id,
+              :name,
+              { include_blank: "All Categories", selected: params[:category_id] },
+              { class: "form-select" } %>
 
           <%= f.submit "Search", class: "btn btn-success" %>
 
@@ -64,6 +63,27 @@
           <% end %>
 
         <% end %>
+
+        <!-- AUTH SECTION (OUTSIDE FORM) -->
+        <% if current_user %>
+          <span class="text-white me-2">
+            Welcome, <strong><%= current_user.username %></strong>
+          </span>
+
+          <%= link_to "Profile",
+              edit_user_path(current_user),
+              class: "btn btn-outline-info btn-sm me-2" %>
+
+          <%= button_to "Logout",
+              logout_path,
+              method: :delete,
+              form: { data: { turbo: false } },
+              class: "btn btn-outline-light btn-sm" %>
+
+        <% else %>
+          <%= link_to "Login", login_path, class: "btn btn-outline-light btn-sm" %>
+        <% end %>
+
       </div>
 
     </div>

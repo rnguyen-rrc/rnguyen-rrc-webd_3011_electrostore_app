@@ -5,6 +5,10 @@ class Product < ApplicationRecord
 
   has_one_attached :image
 
+  validates :name, presence: true
+  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :stock_quantity, numericality: { greater_than_or_equal_to: 0 }
+
   scope :new_products, -> {
     where("created_at >= ?", 3.days.ago)
   }
@@ -26,12 +30,12 @@ class Product < ApplicationRecord
     ["categories", "product_categories"]
   end
 
-attr_accessor :remove_image
+  attr_accessor :remove_image
 
-before_save :purge_image_if_requested
+  before_save :purge_image_if_requested
 
-def purge_image_if_requested
-  image.purge if remove_image == "1"
-end
+  def purge_image_if_requested
+    image.purge if remove_image == "1"
+  end
 
 end

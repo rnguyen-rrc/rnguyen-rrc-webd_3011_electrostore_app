@@ -1,0 +1,95 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+      <div class="card shadow-sm p-4">
+        <h2 class="mb-4 text-center">Create Account</h2>
+
+        <%= form_with model: @user, url: signup_path, local: true do |f| %>
+
+          <!-- Username -->
+          <div class="mb-3">
+            <%= f.label :username %>
+            <%= f.text_field :username, class: "form-control" %>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <%= f.label :password %>
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-3">
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <%= f.label :email %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <%= f.label :phone %>
+            <%= f.text_field :phone, class: "form-control" %>
+          </div>
+
+          <!-- First Name -->
+          <div class="mb-3">
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, class: "form-control" %>
+          </div>
+
+          <!-- Last Name -->
+          <div class="mb-3">
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, class: "form-control" %>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3">
+            <%= f.label :street_name, "Street" %>
+            <%= f.text_field :street_name, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :city %>
+            <%= f.text_field :city, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :province_id, "Province" %>
+            <%= f.collection_select :province_id,
+                  Province.all,
+                  :id,
+                  :name,
+                  { prompt: "Select Province" },
+                  { class: "form-control" } %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :postal_code %>
+            <%= f.text_field :postal_code, class: "form-control" %>
+          </div>
+
+          <!-- Submit -->
+          <div class="d-grid">
+            <%= f.submit "Create Account", class: "btn btn-success btn-lg" %>
+          </div>
+
+        <% end %>
+
+        <div class="text-center mt-3">
+          <%= link_to "Already have an account? Login", login_path %>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
