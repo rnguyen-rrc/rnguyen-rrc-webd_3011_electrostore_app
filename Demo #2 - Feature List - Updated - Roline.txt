@@ -1,0 +1,23 @@
+On April 2, 2026 @ 1:00PM
+
+Roline Nguyen will demonstrate
+
+2.4 Filter the displayed products in two of the follow manners:
+SELECT * FROM 'products' order by id desc;
+
+3.1.1 Add various products to a shopping cart saved in session.
+3.1.2 Edit quantity of items in shopping cart and remove items from cart.
+3.1.3 Complete a checkout process after filling their shopping cart, including:
+3.1.4 Sign up for an account with a username and password so that my address details can be saved to simplify future orders.
+3.1.5 Save their address details (including province) during or after account sign-up.
+4.1.4 Make use of Rails “View Partials” to optimize the ERB views used for the website.
+app\views\products\_product_card.html.erb
+
+4.1.5 Use the SCSS pre-processor for all styling rules instead of CSS.
+app\assets\stylesheets\_products.scss
+
+4.2.1 Use Rails validations in your models to ensure that data submitted to the site by administrator and customers is present and correctly formatted.
+app\models\order.rb
+app\models\product.rb
+
+5.2 Project implements image uploads using ActiveStorage or a gem like Carrierwave.
