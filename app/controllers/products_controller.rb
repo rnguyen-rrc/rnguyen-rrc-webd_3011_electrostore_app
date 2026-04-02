@@ -24,7 +24,7 @@ class ProductsController < ApplicationController
 
     @products = @products
                   .distinct
-                  .order(id: :asc)
+                  .order(id: :desc)
                   .page(params[:page])
                   .per(12)
   end

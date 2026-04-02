@@ -1,5 +1,7 @@
 class CartController < ApplicationController
   def index
+    session[:cart] ||= {}
+    
     @cart = session[:cart] || {}
 
     @products = Product.where(id: @cart.keys)

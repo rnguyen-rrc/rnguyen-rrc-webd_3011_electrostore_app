@@ -6,19 +6,24 @@
 
     <%= form_with url: checkout_index_path, method: :post, local: true do %>
 
-      <%= text_field_tag :first_name, nil, placeholder: "First Name", class: "form-control mb-2" %>
-      <%= text_field_tag :last_name, nil, placeholder: "Last Name", class: "form-control mb-2" %>
-      <%= email_field_tag :email, nil, placeholder: "Email", class: "form-control mb-2" %>
-      <%= text_field_tag :phone, nil, placeholder: "Phone", class: "form-control mb-2" %>
+      <%= text_field_tag :first_name, @user&.first_name, placeholder: "First Name", class: "form-control mb-2" %>
+      <%= text_field_tag :last_name, @user&.last_name, placeholder: "Last Name", class: "form-control mb-2" %>
+      <%= email_field_tag :email, @user&.email, placeholder: "Email", class: "form-control mb-2" %>
+      <%= text_field_tag :phone, @user&.phone, placeholder: "Phone", class: "form-control mb-2" %>
 
-      <%= text_field_tag :street, nil, placeholder: "Street", class: "form-control mb-2" %>
-      <%= text_field_tag :city, nil, placeholder: "City", class: "form-control mb-2" %>
-      <%= text_field_tag :postal_code, nil, placeholder: "Postal Code", class: "form-control mb-2" %>
+      <%= text_field_tag :street, @user&.street_name, placeholder: "Street", class: "form-control mb-2" %>
+      <%= text_field_tag :city, @user&.city, placeholder: "City", class: "form-control mb-2" %>
+      <%= text_field_tag :postal_code, @user&.postal_code, placeholder: "Postal Code", class: "form-control mb-2" %>
 
       <%= select_tag :province_id,
-          options_from_collection_for_select(Province.all, :id, :name),
-          prompt: "Select Province",
-          class: "form-control mb-3" %>
+        options_from_collection_for_select(
+          Province.all,
+          :id,
+          :name,
+          @user&.province_id
+        ),
+        prompt: "Select Province",
+        class: "form-control mb-3" %>
 
       <%= submit_tag "Place Order", class: "btn btn-success" %>
 
@@ -27,7 +32,7 @@
 
   <!-- RIGHT: Order Summary -->
   <div class="col-md-4">
-    <div class="card p-3 mt-5">
+    <div class="card p-3">
       <h4>Order Summary</h4>
 
       <p class="d-flex justify-content-between">
@@ -62,8 +67,8 @@
 document.addEventListener("DOMContentLoaded", function() {
   const provinceSelect = document.querySelector("select[name='province_id']");
 
-  provinceSelect.addEventListener("change", function() {
-    const provinceId = this.value;
+  function calculateTax(provinceId) {
+    if (!provinceId) return;
 
     fetch(`/provinces/${provinceId}/tax`)
       .then(res => res.json())
@@ -74,14 +79,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const pstAmount = subtotal * data.pst_rate;
         const total = subtotal + hstAmount + pstAmount;
 
-        // Update labels with %
         document.getElementById("hst-label").innerText =
           `HST/GST (${(data.hst_rate * 100).toFixed(0)}%)`;
 
         document.getElementById("pst-label").innerText =
           `PST (${(data.pst_rate * 100).toFixed(0)}%)`;
 
-        // Update amounts
         document.getElementById("hst-amount").innerText =
           "$" + hstAmount.toFixed(2);
 
@@ -91,6 +94,16 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("total-amount").innerText =
           "$" + total.toFixed(2);
       });
+  }
+
+  // When user changes province
+  provinceSelect.addEventListener("change", function() {
+    calculateTax(this.value);
   });
+
+  // NEW: auto-run if province already selected
+  if (provinceSelect.value) {
+    calculateTax(provinceSelect.value);
+  }
 });
 </script>
