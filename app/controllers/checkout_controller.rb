@@ -93,7 +93,7 @@ class CheckoutController < ApplicationController
       hst_amount: hst_amount,
       pst_amount: pst_amount,
       total_amount: total,
-      status: "pending",
+      status: "new",
       email: params[:email],
       phone: params[:phone],
     )
