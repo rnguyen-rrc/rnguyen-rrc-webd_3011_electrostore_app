@@ -16,4 +16,8 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, length: { minimum: 6 }, if: -> { password.present? }
   validates :postal_code, format: { with: /\A[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d\z/ }
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["city", "created_at", "email", "first_name", "id", "id_value", "last_name", "password_digest", "phone", "postal_code", "province_id", "role", "street_name", "updated_at", "username"]
+  end
 end

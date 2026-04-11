@@ -4,7 +4,7 @@ class Province < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  validates :gst_rate, presence: true,
+  validates :hst_rate, presence: true,
                        numericality: { greater_than_or_equal_to: 0 }
 
   validates :pst_rate, presence: true,
@@ -12,5 +12,9 @@ class Province < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     column_names
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["orders", "users"]
   end
 end
