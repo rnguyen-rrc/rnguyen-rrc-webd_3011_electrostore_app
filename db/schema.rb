@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_211719) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_11_013745) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -128,6 +128,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_211719) do
     t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "order_id", null: false
+    t.datetime "payment_date_time"
+    t.string "payment_method"
+    t.string "status"
+    t.string "stripe_payment_id"
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
   create_table "product_categories", force: :cascade do |t|
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
@@ -178,6 +189,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_211719) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "payments", "orders"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "users", "provinces"

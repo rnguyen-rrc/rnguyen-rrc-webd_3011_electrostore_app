@@ -23,6 +23,13 @@
   <%= @order.phone %>
 </p>
 
+<p>
+  <strong>Status:</strong>
+  <span class="badge <%= @order.status == 'paid' ? 'bg-success' : 'bg-warning' %>">
+    <%= @order.status.capitalize %>
+  </span>
+</p>
+
 <hr>
 
 <table class="table">

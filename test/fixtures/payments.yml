@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order: one
+  stripe_payment_id: MyString
+  payment_method: MyString
+  status: MyString
+  payment_date_time: 2026-04-10 20:37:45
+
+two:
+  order: two
+  stripe_payment_id: MyString
+  payment_method: MyString
+  status: MyString
+  payment_date_time: 2026-04-10 20:37:45

@@ -76,3 +76,5 @@ gem 'open-uri'
 
 gem "bootstrap", "~> 5.3"
 gem 'kaminari'
+
+gem 'stripe'
