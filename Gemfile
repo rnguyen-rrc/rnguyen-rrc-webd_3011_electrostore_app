@@ -78,3 +78,5 @@ gem "bootstrap", "~> 5.3"
 gem 'kaminari'
 
 gem 'stripe'
+
+gem 'aws-sdk-s3', require: false

@@ -98,7 +98,7 @@ ActiveAdmin.register Order do
   # ------------------------
   form do |f|
     f.inputs do
-      f.input :status, as: :select, collection: ["new", "paid", "shipped"]
+      f.input :status, as: :select, collection: ["new", "paid", "shipped", "cancelled"]
     end
     f.actions
   end

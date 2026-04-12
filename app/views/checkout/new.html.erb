@@ -66,6 +66,14 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const provinceSelect = document.querySelector("select[name='province_id']");
+  if (!provinceSelect) return;
+
+  function formatCurrency(amount) {
+    return "$" + amount.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
 
   function calculateTax(provinceId) {
     if (!provinceId) return;
@@ -73,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(`/provinces/${provinceId}/tax`)
       .then(res => res.json())
       .then(data => {
-        const subtotal = <%= @subtotal %>;
+        const subtotal = <%= @subtotal.to_f %>;
 
         const hstAmount = subtotal * data.hst_rate;
         const pstAmount = subtotal * data.pst_rate;
@@ -85,23 +93,16 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("pst-label").innerText =
           `PST (${(data.pst_rate * 100).toFixed(0)}%)`;
 
-        document.getElementById("hst-amount").innerText =
-          "$" + hstAmount.toFixed(2);
-
-        document.getElementById("pst-amount").innerText =
-          "$" + pstAmount.toFixed(2);
-
-        document.getElementById("total-amount").innerText =
-          "$" + total.toFixed(2);
+        document.getElementById("hst-amount").innerText = formatCurrency(hstAmount);
+        document.getElementById("pst-amount").innerText = formatCurrency(pstAmount);
+        document.getElementById("total-amount").innerText = formatCurrency(total);
       });
   }
 
-  // When user changes province
   provinceSelect.addEventListener("change", function() {
     calculateTax(this.value);
   });
 
-  // NEW: auto-run if province already selected
   if (provinceSelect.value) {
     calculateTax(provinceSelect.value);
   }

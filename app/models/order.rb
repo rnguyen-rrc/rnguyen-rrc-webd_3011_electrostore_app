@@ -49,7 +49,7 @@ class Order < ApplicationRecord
   # ------------------------
   validates :status,
     inclusion: {
-      in: %w[pending paid shipped cancelled],
+      in: %w[new paid shipped cancelled],
       message: "%{value} is not a valid status"
     }
 
