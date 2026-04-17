@@ -69,7 +69,7 @@ gem 'devise'
 gem 'activeadmin'
 gem "sassc-rails"
 
-gem "faker", "~> 3.6"
+gem "faker", "~> 3.8"
 
 gem 'nokogiri'
 gem 'open-uri'
